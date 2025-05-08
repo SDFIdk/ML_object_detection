@@ -1,0 +1,18 @@
+name: ML_object_detection
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.9
+  - gdal
+  - geopandas
+  - fiona
+  - pillow
+  - pandas
+  - psutil
+  - rasterio
+  - memory_profiler
+  - pip
+  - pip:
+      - labelme2yolo
+      - ultralytics
