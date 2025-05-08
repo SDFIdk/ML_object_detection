@@ -1,53 +1,36 @@
-# [Eksperiment: Firkant-arealer](https://github.com/Kortforsyningen/[INDSÆT-ARKIV-ID])
-
-Dette eksperiment laver data, der kan bruges til at illustrere, hvordan arealet af en firkant vokser med sidelængderne på firkanten.
-
-## Systemkrav
-
-For at anvende programmet, skal du have følgende installeret, samt have mulighed for at køre det fra en system-terminal:
-
-*   Git til at hente programmet
-*   SSH til overførsel af data mellem lokal versionshistorik og centralt arkiv på GitHub
-*   Python 3.10.0+
+# ML_object_detection
 
 
 ## Installation
 
-*   Hent koden:
+*   clone repo
 
     ```sh
-    git clone https://github.com/Kortforsyningen/[INDSÆT-ARKIV-ID]
+    git clone https://github.com/SDFIdk/ML_object_detection
     ```
+*   create conda environment
+    ```sh
+    mamba create env -f environment.yml
+    ```  
+  
 
-## Eksempel på anvendelse
+## Example use
 
-*   Gå til mappen `scripts` i roden af arkivet:
+*   Create a dataset with labelme
+    note: draw rectangles form the upper left corner to the lower right corner
+
+*   convert the labelme dataset to yolo format with 
 
     ```sh
-    cd template-python-prototype/scripts
+    labelme2yolo --json_dir /path/to/labelme_json_dir/ --val_size 0.15 --test_size 0.15
     ```
-    
-*   Beregn areal med fire sidelængder:
+*   Train a object detection model on the dataset 
 
     ```sh
-    python run.py 1 2 3 4
-    # Resultat
-    # {
-    #   "sides": {
-    #     "a": 1.0,
-    #     "b": 2.0,
-    #     "c": 3.0,
-    #     "d": 4.0
-    #   },
-    #   "area": 4.898979485566356
-    # }
-    ```
+    python train.py --path_to_yml /path/to/labelme_json_dir/config.yml
+    ```    
+*   Use the model for inference 
 
-## Bidrag til dette arkiv
-
-*   Konkrete ønsker kan oprettes som [GitHub issues](https://github.com/Kortforsyningen/[INDSÆT-ARKIV-ID]/issues).
-
-*   Bidrag kan oprettes gennem GitHubs forking- og pull-request-mekanisme:
-    -   På kodearkivets side, vælg Fork
-    -   Fra din egen fork, lav en by branch og foretag rettelserne i denne.
-    -   Når du er klar, kan du oprette et pull-request fra den nye branch.
+    ```sh
+    python infer.py --yml /path/to/labelme_json_dir/config.yml --data path/to/folder/or/image.tif
+    ```    
