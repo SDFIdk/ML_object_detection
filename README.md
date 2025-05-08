@@ -23,6 +23,7 @@
 
     ```sh
     labelme2yolo --json_dir /path/to/labelme_json_dir/ --val_size 0.15 --test_size 0.15
+    e.g labelme2yolo --json_dir /mnt/T/mnt/trainingdata/object_detection/from_Fdrev_ampol/split/
     ```
 *   Train a object detection model on the dataset 
 
