@@ -22,6 +22,10 @@
 
     note: draw rectangles form the upper left corner to the lower right corner
 
+    make sure that all .json files use the same format (original .tif image)
+    python standardize_json.py --json_dir /mnt/T/mnt/trainingdata/object_detection/from_Fdrev_ampol/all/
+
+
 *   convert the labelme dataset to yolo format with 
 
     ```sh
