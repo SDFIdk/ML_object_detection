@@ -22,6 +22,8 @@
 
     note: draw rectangles form the upper left corner to the lower right corner
 
+    NOTE:if data is on the old ITU NAS you have to moove the dataset to a local folder the the user have rights to change mete data on 
+
     make sure that all .json files use the same format (original .tif image)
     python standardize_json.py --json_dir /mnt/T/mnt/trainingdata/object_detection/from_Fdrev_ampol/all/
 
@@ -35,7 +37,7 @@
 *   Train a object detection model on the dataset 
 
     ```sh
-    python train.py --path_to_yml /path/to/labelme_json_dir/config.yml
+    python train.py --data /path/to/labelme_json_dir/config.yml
     ```    
 *   Use the model for inference (e.g for creating sugestions for new labels) 
 
