@@ -20,9 +20,17 @@
     split dataset like this 
     python split_with_gdal.py --image /path/to/large/images --output dataset/folder --x 640 --y 640 --overlap 40
 
+
+* copy all data to a new location before doing the next steps
+
     note: draw rectangles form the upper left corner to the lower right corner
 
     NOTE:if data is on the old ITU NAS you have to moove the dataset to a local folder the the user have rights to change mete data on 
+
+*   set all "unkown"/"ignore" areas to black 
+    python  mask_unknown_regions.py -h
+
+
 
     make sure that all .json files use the same format (original .tif image)
     python standardize_json.py --json_dir /mnt/T/mnt/trainingdata/object_detection/from_Fdrev_ampol/all/

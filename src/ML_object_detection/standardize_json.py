@@ -2,7 +2,7 @@ import json
 import argparse
 from pathlib import Path
 
-def fix_json(json_path, remove_id):
+def fix_json(json_path, remove_ids):
     with open(json_path, 'r') as f:
         data = json.load(f)
 
@@ -15,10 +15,10 @@ def fix_json(json_path, remove_id):
 
     # Filter out shapes with label == remove_id
     original_count = len(data.get('shapes', []))
-    data['shapes'] = [shape for shape in data.get('shapes', []) if shape.get('label') != remove_id]
+    data['shapes'] = [shape for shape in data.get('shapes', []) if not (shape.get('label') in remove_ids)]
     removed_count = original_count - len(data['shapes'])
 
-    print(f"{json_path.name}: Removed {removed_count} shape(s) with label '{remove_id}'.")
+    print(f"{json_path.name}: Removed {removed_count} shape(s) with labels '{remove_ids}'.")
 
     with open(json_path, 'w') as f:
         json.dump(data, f, indent=2)
@@ -26,11 +26,11 @@ def fix_json(json_path, remove_id):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--json_dir', type=Path, required=True, help='Directory with LabelMe .json files')
-    parser.add_argument('--remove_id', type=str, default='Skorsten', help='Label to remove from shapes')
+    parser.add_argument('--remove_ids', type=str, default=['Skorsten',"ignore","unknown"], help='Label to remove from shapes')
     args = parser.parse_args()
 
     for json_file in args.json_dir.glob('*.json'):
-        fix_json(json_file, args.remove_id)
+        fix_json(json_file, args.remove_ids)
 
 if __name__ == "__main__":
     main()
