@@ -31,9 +31,11 @@ def create_labelme_json_dict(image_path, shapes):
         "imageWidth": width,
     }
 
-def detect_and_save_json(model_path, image_dir):
+def detect_and_save_json(model_path, image_dir,output_dir):
     model = YOLO(model_path)
     image_dir = Path(image_dir)
+    output_dir =  Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     image_paths = list(image_dir.glob("*.jpg")) + list(image_dir.glob("*.png")) + list(image_dir.glob("*.tif"))
 
@@ -48,7 +50,7 @@ def detect_and_save_json(model_path, image_dir):
                 shapes.append(shape)
 
         json_dict = create_labelme_json_dict(image_path, shapes)
-        json_path = image_path.with_suffix(".json")
+        json_path = output_dir/(image_path.with_suffix(".json").name)
 
         with open(json_path, "w") as f:
             json.dump(json_dict, f, indent=2)
@@ -59,9 +61,10 @@ def main():
     parser = argparse.ArgumentParser(description="Run YOLOv8 and export LabelMe-compatible JSON annotations.")
     parser.add_argument("--path_to_trained_model", type=str, required=True, help="Path to YOLOv8 model")
     parser.add_argument("--path_to_images", type=str, required=True, help="Path to image folder")
+    parser.add_argument("--output_folder", type=str, required=True, help="Path to output folder")
     args = parser.parse_args()
 
-    detect_and_save_json(args.path_to_trained_model, args.path_to_images)
+    detect_and_save_json(args.path_to_trained_model, args.path_to_images,args.output_folder)
 
 if __name__ == "__main__":
     main()
