@@ -1,3 +1,5 @@
+#Prediction time is: 8128.92 ms   (8 seconds per large image)
+
 import argparse
 import os
 import json
