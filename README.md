@@ -10,7 +10,7 @@
     ```
 *   create conda environment
     ```sh
-    mamba create env -f environment.yml
+    mamba env create -f environment.yml
     ```  
   
 

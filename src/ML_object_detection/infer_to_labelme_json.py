@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import cv2
 from ultralytics import YOLO
+import time
 
 def yolo_to_labelme_shape(box, label):
     """Convert YOLO bounding box to LabelMe rectangle shape"""
@@ -38,6 +39,7 @@ def detect_and_save_json(model_path, image_dir,output_dir):
     output_dir.mkdir(parents=True, exist_ok=True)
 
     image_paths = list(image_dir.glob("*.jpg")) + list(image_dir.glob("*.png")) + list(image_dir.glob("*.tif"))
+    start_time = time.time()
 
     for image_path in image_paths:
         print(f"Processing {image_path.name}")
@@ -56,6 +58,9 @@ def detect_and_save_json(model_path, image_dir,output_dir):
             json.dump(json_dict, f, indent=2)
 
         print(f"Saved: {json_path}")
+    end_time = time.time()
+    print("inference took : "+str(end_time -start_time))
+    print("time_per image: "+str((end_time -start_time)/len(image_paths)))
 
 def main():
     parser = argparse.ArgumentParser(description="Run YOLOv8 and export LabelMe-compatible JSON annotations.")
