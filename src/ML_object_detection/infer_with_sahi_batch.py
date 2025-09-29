@@ -20,6 +20,9 @@ def sahi_batch_inference(weights_path, folder_path, result_path, slice_width, ov
     """
     try:
         results = predict(
+            project="./sahi_detections" , # output_dir,
+            name='sahi_RASdetection_resultsfaster',
+
             model_type="ultralytics",
             model_path=weights_path,
             model_device="cuda:0" if torch.cuda.is_available() else "cpu",
