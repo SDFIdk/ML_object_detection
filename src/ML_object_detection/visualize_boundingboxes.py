@@ -31,6 +31,7 @@ def draw_bounding_boxes_rasterio(image_path, json_path, output_path):
 
     shapes = data.get("shapes", [])
     labels = list({shape["label"] for shape in shapes})
+    print(labels)
     label_to_color = get_color_map(labels)
 
     # Open large image with rasterio
