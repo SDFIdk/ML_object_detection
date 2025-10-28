@@ -28,7 +28,7 @@ def merge_geojson_files(input_paths, output_path):
             # Extend the master feature list with features from the current file
             features = data.get('features', [])
             for i in range(len(features)):
-                features[i]["image"]=Path(path).name
+                features[i]["properties"]["image"]=Path(path).name
             all_features.extend(features)
             print(f"Loaded {len(features)} features from '{path}'.")
 
