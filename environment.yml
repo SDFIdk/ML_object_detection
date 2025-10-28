@@ -16,3 +16,5 @@ dependencies:
   - pip:
       - labelme2yolo
       - ultralytics
+      - sahi
+      - tifffile
