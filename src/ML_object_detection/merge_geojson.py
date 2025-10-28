@@ -1,7 +1,7 @@
 import argparse
 import json
 import sys
-
+from pathlib import Path
 def merge_geojson_files(input_paths, output_path):
     """
     Merges features from multiple GeoJSON FeatureCollection files into a single file.
@@ -27,6 +27,8 @@ def merge_geojson_files(input_paths, output_path):
             
             # Extend the master feature list with features from the current file
             features = data.get('features', [])
+            for i in range(len(features)):
+                features[i]["image"]=Path(path).name
             all_features.extend(features)
             print(f"Loaded {len(features)} features from '{path}'.")
 

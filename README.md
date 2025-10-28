@@ -55,3 +55,4 @@
     python src/ML_object_detection/infer_with_sahi.py --weights /mnt/T/mnt/trainingdata/object_detection/object_detection_dataset_2025_06_16/train9/weights/best.pt --folder_with_images /mnt/T/mnt/ML_input/object_detection/large_image_to_predict --result_folder /mnt/T/mnt/ML_output/object_detection/linux_test
 
     ```    
+
