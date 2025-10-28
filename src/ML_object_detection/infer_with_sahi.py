@@ -140,7 +140,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Create the output directory if it doesn't exist
-    os.makedirs(os.path.dirname(args.result_folder), exist_ok=True)
+    os.makedirs(args.result_folder, exist_ok=True)
 
     sahi_inference(
         args.weights, 
