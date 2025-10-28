@@ -1,4 +1,4 @@
- #when testing this code it managed 14.8 seconds per alrge image. This is not the fastest posible.
+#when testing this code it managed 14.8 seconds per large image. This is not the fastest posible.
 
 import argparse
 import os
@@ -9,7 +9,13 @@ from sahi.predict import get_sliced_prediction
 from tqdm import tqdm
 import time
 import pathlib
-import cv2
+import tifffile
+
+def get_image_size(image_path):
+    with tifffile.TiffFile(image_path) as tif:
+        page = tif.pages[0]
+        height, width = page.shape[:2]
+    return width, height
 
 def yolo_to_labelme_shape(box, label):
     """Convert YOLO bounding box to LabelMe rectangle shape"""
@@ -25,8 +31,8 @@ def yolo_to_labelme_shape(box, label):
     }
 
 def create_labelme_json_dict(image_path, shapes):
-    image = cv2.imread(str(image_path))
-    height, width = image.shape[:2]
+
+    width, height = get_image_size(str(image_path))
 
     return {
         "version": "5.0.1",

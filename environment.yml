@@ -17,3 +17,4 @@ dependencies:
       - labelme2yolo
       - ultralytics
       - sahi
+      - tifffile
