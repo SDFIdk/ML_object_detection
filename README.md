@@ -10,7 +10,9 @@
     ```
 *   create conda environment
     ```sh
+    cd ML_object_detection
     mamba env create -f environment.yml
+    mamba activate  ML_object_detection
     ```  
   
 
