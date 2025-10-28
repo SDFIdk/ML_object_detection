@@ -101,11 +101,11 @@ def sahi_inference(weights_path, folder_path, result_folder, slice_width, overla
         shapes = []
 
         for r in results.object_prediction_list:
-            print("r:"+str(r))
-            print(" pred.category.name:"+str(r.category.name))
-            print("bbox  : "+str(r.bbox))
-            print("bbox  : "+str(dir(r.bbox)))
-            print("bbox  : "+str(r.bbox.to_xyxy()))
+            #print("r:"+str(r))
+            #print(" pred.category.name:"+str(r.category.name))
+            #print("bbox  : "+str(r.bbox))
+            #print("bbox  : "+str(dir(r.bbox)))
+            #print("bbox  : "+str(r.bbox.to_xyxy()))
 
             shape = yolo_to_labelme_shape(r.bbox.to_xyxy(), r.category.name)
             shapes.append(shape)
@@ -138,6 +138,9 @@ if __name__ == "__main__":
     parser.add_argument("--overlap_ratio", type=float, default=0.0625, help="Overlap ratio between slices (default: 0.0625).")
 
     args = parser.parse_args()
+
+
+    print("GPU is available: "+str(torch.cuda.is_available()))
 
     # Create the output directory if it doesn't exist
     os.makedirs(args.result_folder, exist_ok=True)
