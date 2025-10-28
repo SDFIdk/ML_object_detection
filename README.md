@@ -47,9 +47,9 @@
     ```sh
     python train.py --data /path/to/labelme_json_dir/config.yml
     ```    
-*   Use the model for inference (e.g for creating sugestions for new labels) 
+*   Use the model for inference on large (unsplitted images) (e.g for creating sugestions for new labels) 
 
     ```sh
+    python src/ML_object_detection/infer_with_sahi.py --weights /mnt/T/mnt/trainingdata/object_detection/object_detection_dataset_2025_06_16/train9/weights/best.pt --folder_with_images /mnt/T/mnt/ML_input/object_detection/large_image_to_predict --result_folder /mnt/T/mnt/ML_output/object_detection/linux_test
 
-    python infer_to_labelme_json.py --path_to_trained_model runs/detect/train/weights/last.pt --path_to_images ~/object_detection_dataset/split_unlabeled/
     ```    
