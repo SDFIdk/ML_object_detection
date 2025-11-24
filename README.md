@@ -1,5 +1,6 @@
 # ML_object_detection
 
+Maintained by the Danish Climate Data Agency for Bounding Box Detection on Oblique Images.
 
 ## Installation
 
