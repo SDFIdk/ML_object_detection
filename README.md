@@ -2,6 +2,9 @@
 
 Maintained by the Danish Climate Data Agency for Bounding Box Detection on Oblique Images.
 
+<img width="1124" height="1125" alt="image" src="https://github.com/user-attachments/assets/69aa5ca9-ac97-4a4b-98d5-b0820fc07f3c" />
+
+
 ## Installation
 
 *   clone repo
