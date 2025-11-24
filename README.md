@@ -18,6 +18,14 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
   
 
 ## Example use
+*   Use the included model for inference on one small and one large image from the included set of example images
+    ```sh
+    python src/ML_object_detection/infer_with_sahi.py --weights models/example_model.pt --folder_with_images data/example_images/ --result_folder output
+    ```
+
+
+
+
 
 *   Create a dataset with labelme
     split dataset like this 
@@ -53,7 +61,7 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
 *   Use the model for inference on large (unsplitted images) (e.g for creating sugestions for new labels) 
 
     ```sh
-    python src/ML_object_detection/infer_with_sahi.py --weights /mnt/T/mnt/trainingdata/object_detection/object_detection_dataset_2025_06_16/train9/weights/best.pt --folder_with_images /mnt/T/mnt/ML_input/object_detection/large_image_to_predict --result_folder /mnt/T/mnt/ML_output/object_detection/linux_test
+    python src/ML_object_detection/infer_with_sahi.py --weights models/example_model.pt --folder_with_images data/example_images/ --result_folder output
 
     ```    
 
