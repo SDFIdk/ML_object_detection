@@ -26,27 +26,23 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
     python src/ML_object_detection/infer_with_sahi.py --weights models/example_model.pt --folder_with_images data/example_images/ --result_folder output
     ```
 
+## Create dataset for training
 
-
-
-
-*   Create a dataset with labelme
-    split dataset like this 
+* split the images to sizes suitable for yolo
+  
     python split_with_gdal.py --image /path/to/large/images --output dataset/folder --x 640 --y 640 --overlap 40
+    
+*   Create a dataset with labelme
+    Open folder containing the splitted images
+    for each image you want to train on, draw rectangles form the upper left corner to the lower right corner.
+    OBS. All objects of the categoriez you want to detect needs to be marked up. Partly labeled images will ruin the training.
 
-
-* copy all data to a new location before doing the next steps
-
-    note: draw rectangles form the upper left corner to the lower right corner
-
-    NOTE:if data is on the old ITU NAS you have to moove the dataset to a local folder the the user have rights to change mete data on 
-
-*   set all "unkown"/"ignore" areas to black 
+*   (optional) set all "unkown"/"ignore" areas to black
+  if you labeled areas with the text "ignore" we have the option to mask all these areas and make them black.
     python  mask_unknown_regions.py -h
 
 
-
-    make sure that all .json files use the same format (original .tif image)
+*    make sure that all .json files use the same format (original .tif image)
     python standardize_json.py --json_dir /mnt/T/mnt/trainingdata/object_detection/from_Fdrev_ampol/all/
 
 
@@ -60,6 +56,7 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
 
     ```sh
     python train.py --data /path/to/labelme_json_dir/config.yml
+    e.g e.g  python src/ML_object_detection/train.py --data /mnt/T/mnt/trainingdata/object_detection/object_detection_dataset/2025-06-16/labelme_images/YOLODataset/dataset.yaml
     ```    
 *   Use the model for inference on large (unsplitted images) (e.g for creating sugestions for new labels) 
 
