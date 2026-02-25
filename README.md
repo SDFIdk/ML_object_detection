@@ -24,6 +24,8 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
 *   Use the included model for inference on one small and one large image from the included set of example images
     ```sh
     python src/ML_object_detection/infer_with_sahi.py --weights models/example_model.pt --folder_with_images data/example_images/ --result_folder output
+
+    by placing the output .json files in the same folder as the image files you can inspect the result with labelme
     ```
 
 
@@ -39,7 +41,6 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
 
     note: draw rectangles form the upper left corner to the lower right corner
 
-    NOTE:if data is on the old ITU NAS you have to moove the dataset to a local folder the the user have rights to change mete data on 
 
 *   set all "unkown"/"ignore" areas to black 
     python  mask_unknown_regions.py -h
@@ -60,6 +61,7 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
 
     ```sh
     python train.py --data /path/to/labelme_json_dir/config.yml
+    e.g  python src/ML_object_detection/train.py --data /mnt/T/mnt/trainingdata/object_detection/object_detection_dataset/2025-06-16/labelme_images/YOLODataset/dataset.yaml
     ```    
 *   Use the model for inference on large (unsplitted images) (e.g for creating sugestions for new labels) 
 
