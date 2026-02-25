@@ -70,6 +70,42 @@ The [KDS objects in oblique images](https://huggingface.co/datasets/rasmuspjohan
    ```
    Add other options as needed (e.g. `--epochs`, `--imgsz`, `--weights`).
 
+### Download labelme format and convert to YOLO for training
+
+The same dataset is also provided in [labelme](https://github.com/wkentaro/labelme) format in the **labelme_format/** folder on the Hub (one `.json` and one `.tif` per image). To download that folder and convert it to YOLO so you can train:
+
+1. **Download the dataset** (or clone the repo) so you have `labelme_format/` locally, e.g.:
+   ```sh
+   python -c "
+   from huggingface_hub import snapshot_download
+   snapshot_download(
+       repo_id=\"rasmuspjohansson/KDS_objects_in_oblique_images\",
+       repo_type=\"dataset\",
+       local_dir=\"./KDS_objects\"
+   )
+   "
+   ```
+   Then your labelme files are in `KDS_objects/labelme_format/` (`.json` and `.tif` pairs).
+
+2. **(Optional) Standardize JSON** if your labelme JSONs refer to different image paths or you need a consistent format:
+   ```sh
+   python src/ML_object_detection/standardize_json.py --json_dir ./KDS_objects/labelme_format
+   ```
+
+3. **Convert labelme to YOLO** with `labelme2yolo` (creates `images/`, `labels/`, and a config YAML):
+   ```sh
+   labelme2yolo --json_dir ./KDS_objects/labelme_format --val_size 0.15 --test_size 0.15
+   ```
+   By default the YOLO dataset is written under a subfolder of the directory that contains the JSON dir (see `labelme2yolo --help` for `--out_dir` if you want a specific path).
+
+4. **Set the dataset path** in the generated `dataset.yaml` (e.g. `path: .` or the path to the folder that contains `images/` and `labels/`).
+
+5. **Train** using the generated YOLO config:
+   ```sh
+   python src/ML_object_detection/train.py --data ./KDS_objects/YOLODataset/dataset.yaml
+   ```
+   (Adjust the path to `dataset.yaml` to match where `labelme2yolo` wrote it.)
+
 ## Create new dataset for training
 
 * split the images to sizes suitable for yolo
