@@ -28,7 +28,49 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
     by placing the output .json files in the same folder as the image files you can inspect the result with labelme
     ```
 
-## Create dataset for training
+## Download dataset from Hugging Face and train
+
+The [KDS objects in oblique images](https://huggingface.co/datasets/rasmuspjohansson/KDS_objects_in_oblique_images) dataset is available on Hugging Face in YOLO format (images, labels, and `dataset.yaml`). To download it and train:
+
+1. **Install the Hub client** (if not already installed):
+   ```sh
+   pip install huggingface_hub
+   ```
+
+2. **Download the dataset** (e.g. into a folder named `KDS_objects`):
+   ```sh
+   python -c "
+   from huggingface_hub import snapshot_download
+   snapshot_download(
+       repo_id=\"rasmuspjohansson/KDS_objects_in_oblique_images\",
+       repo_type=\"dataset\",
+       local_dir=\"./KDS_objects\"
+   )
+   "
+   ```
+   Or clone the repo: `git clone https://huggingface.co/datasets/rasmuspjohansson/KDS_objects_in_oblique_images KDS_objects`
+
+3. **Set the dataset path in `dataset.yaml`**  
+   Open `KDS_objects/dataset.yaml` and set `path` to the directory that contains `images/` and `labels/` (the folder where you downloaded the data). For example, if you downloaded into `./KDS_objects`:
+   ```yaml
+   path: .    # use "." if you run train from inside KDS_objects, or use the full path to KDS_objects
+   train: images/train
+   val: images/val
+   test:
+   names:
+     0: Velux
+     1: Kvist
+     2: Altan
+   ```
+   If you run training from the project root, set `path` to the absolute or relative path to `KDS_objects`, e.g. `path: ./KDS_objects`.
+
+4. **Train** with the downloaded dataset:
+   ```sh
+   python src/ML_object_detection/train.py --data ./KDS_objects/dataset.yaml
+   ```
+   Add other options as needed (e.g. `--epochs`, `--imgsz`, `--weights`).
+
+## Create new dataset for training
 
 * split the images to sizes suitable for yolo
   
@@ -53,11 +95,9 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
 
     note: draw rectangles from the upper left corner to the lower right corner
 
-
-*   set all "unkown"/"ignore" areas to black 
-=======
+*   (optional) set all "unknown"/"ignore" areas to black:
     ```sh
-    python  mask_unknown_regions.py -h
+    python src/ML_object_detection/mask_unknown_regions.py -h
     ```
 
 *    make sure that all .json files use the same format (original .tif image)
