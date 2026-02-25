@@ -28,29 +28,43 @@ Maintained by the Danish Climate Data Agency for Bounding Box Detection on Obliq
     by placing the output .json files in the same folder as the image files you can inspect the result with labelme
     ```
 
+## Create dataset for training
 
-
-
-
-*   Create a dataset with labelme
-    split dataset like this 
+* split the images to sizes suitable for yolo
+  
+    ```sh
     python split_with_gdal.py --image /path/to/large/images --output dataset/folder --x 640 --y 640 --overlap 40
+    ```
+*   Create a dataset with labelme
+  
+    Open folder containing the splitted images
+    
+    For each image you want to train on, draw rectangles from the upper left corner to the lower right corner.
+    
+    OBS. All objects of the categoriez you want to detect needs to be marked up. Partly labeled images will ruin the training.
+
+*   (optional) set all "unkown"/"ignore" areas to black
+  
+    If you labeled areas with the text "ignore" (e.g areas for wich you are unsure about the correct classification) we have the option to mask all these areas and make them black.
+    Calling mask_unknown_regions.py with -h flag will give more instructions on usage
 
 
 * copy all data to a new location before doing the next steps
 
-    note: draw rectangles form the upper left corner to the lower right corner
+    note: draw rectangles from the upper left corner to the lower right corner
 
 
 *   set all "unkown"/"ignore" areas to black 
+=======
+    ```sh
     python  mask_unknown_regions.py -h
+    ```
 
+*    make sure that all .json files use the same format (original .tif image)
 
-
-    make sure that all .json files use the same format (original .tif image)
+    
     python standardize_json.py --json_dir /mnt/T/mnt/trainingdata/object_detection/from_Fdrev_ampol/all/
-
-
+    
 *   convert the labelme dataset to yolo format with 
 
     ```sh
